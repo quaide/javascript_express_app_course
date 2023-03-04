@@ -11,6 +11,7 @@ app.set('view engine', 'ejs');
 //listen for requests
 app.listen(3000);
 
+//hard code alternative to the morgan library
 // app.use((req, res, next) => {
 //     console.log('new request made:');
 //     console.log('host: ', req.hostname);
@@ -19,14 +20,16 @@ app.listen(3000);
 //     next();
 // });
 
+//middleware & static files
+app.use(express.static('public'));
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
     //res.send('<p>home page</p>');
     //res.sendFile('./views/index.html', { root: __dirname });
     const blogs = [
-        {title: 'Dev Study', snippet: 'Quaide is using this web app to study JavaScript web apps.'},
-        {title: 'Best Dog in the World', snippet: 'In a new article written by the New York Times, it has been determined that Quaide\'s dog Razz is the goodest dog in history'},
+        {title: 'Dev Study', snippet: 'Quaide is using this course to study JavaScript web apps.'},
+        {title: 'Best Dog in the World', snippet: 'In a new article written by the New York Times, it has been determined that Quaide\'s dog Razz is the goodest dog in history.'},
         {title: 'What is Node.js?', snippet: 'Originally, JavaScript (JS) was designed to run in browsers, using JS engines. In 2009, it was then embedded in a C++ program known as Node, using Google\'s V8 JS engine. It can now be run outside of a browser!'},
       ];
     res.render('index', { title: 'Home', blogs});
