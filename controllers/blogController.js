@@ -1,4 +1,7 @@
 const Blog = require('../models/blog');
+const dayjs = require('dayjs');
+var localizedFormat = require('dayjs/plugin/localizedFormat');
+dayjs.extend(localizedFormat);
 
 //blogIndex, blogDetails, blogCreate, blogCreateGet, blogCreatePost, blogDelete
 
@@ -14,9 +17,11 @@ const blogIndex = (req, res) => {
 
 const blogDetails = (req, res) => {
     const id = req.params.id;
+
     Blog.findById(id)
     .then(result => {
-        res.render('details', { blog: result, title: 'Post Details' });
+        const time = dayjs(result.createdAt).format('LLL');
+        res.render('details', { blog: result, title: 'Post Details', time});
     })
     .catch(err => {
         res.status(404).render('404', {title: 'Blog not Found'});
