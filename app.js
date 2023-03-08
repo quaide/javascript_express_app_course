@@ -2,12 +2,14 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
+require('dotenv').config();
 
 //express app
 const app = express();
 
 //mongoDB connection string
-const dbURI = 'mongodb+srv://username:password@nodecourse.h4qkmfb.mongodb.net/nodeCourse?retryWrites=true&w=majority';
+const dbURI = `mongodb+srv://${process.env.blog_username}:${process.env.blog_password}@nodecourse.h4qkmfb.mongodb.net/nodeCourse?retryWrites=true&w=majority`;
+
 mongoose.connect(dbURI)
     .then((result) => app.listen(3000))
     .catch((err) => console.log(err));

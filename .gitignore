@@ -1,6 +1,9 @@
 # My Practice Files not relevant to project 
 Other/
 
+# ENV file for creds
+*.env
+
 # Logs
 logs
 *.log
