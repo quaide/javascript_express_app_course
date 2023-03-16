@@ -4,3 +4,4 @@ Following along with [this course](https://www.youtube.com/playlist?list=PL4cUxe
 # Additional Features Not in Course 
 Time and date of each blog on blog details view  
 Author of each blog added and stored in MongoDB, displayed on blog details view  
+Log in and Sign Up links as well as User model connected to MongoDB  
