@@ -14,14 +14,14 @@ router.get('/:id', blogController.blogDetails);
 
 router.delete('/:id', blogController.blogDelete);
 
-router.get('/signup', authController.signupGet);
+// router.get('/signup', authController.signupGet);
 
-router.post('/signup', authController.signupPost);
+// router.post('/signup', authController.signupPost);
 
-router.get('/login', authController.loginGet);
+// router.get('/login', authController.loginGet);
 
-router.post('/login', authController.loginPost);
+// router.post('/login', authController.loginPost);
 
-router.get('/logout', authController.logoutGet);
+// router.get('/logout', authController.logoutGet);
 
 module.exports = router;

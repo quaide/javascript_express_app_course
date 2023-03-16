@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
+const authRoutes = require('./routes/authRoutes');
 require('dotenv').config();
 
 //express app
@@ -31,6 +32,7 @@ app.get('/about', (req, res) => {
 });
 
 app.use('/blogs', blogRoutes);
+app.use(authRoutes);
 
 //404 page
 app.use((req, res) => {
