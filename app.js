@@ -3,6 +3,9 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
 const authRoutes = require('./routes/authRoutes');
+const cookierParser = require('cookie-parser');
+const { requireAuth, checkUser } = require('./middleware/authMiddleware');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 //express app
@@ -22,6 +25,10 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(express.json());
+
+app.get('*', checkUser);
 
 app.get('/', (req, res) => {
     res.redirect('/blogs');

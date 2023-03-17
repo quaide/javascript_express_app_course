@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 
 //handle errors
 const handleErrors = (err) => {
+    //this is where console is outputting user validation failed
     console.log(err.message, err.code);
-    let errors = {email: '', password: ''};
+    let errors = {email: '', password: '', firstName: '', lastName: ''};
 
     //incorrect email while logging in
     if(err.message === 'User does not exist') {
@@ -23,6 +24,7 @@ const handleErrors = (err) => {
     }
 
     //validation errors, creating custom messages by cycling through values of errors, finding the message, and updating errors object
+    //this is for errors to display on sign up page
     if (err.message.includes('user validation failed')) {
         Object.values(err.errors).forEach(({properties}) => {
             errors[properties.path] = properties.message;
@@ -48,15 +50,19 @@ module.exports.loginGet = (req, res) => {
 };
 
 module.exports.signupPost = async (req, res) => {
-    const { email, password, firstName, lastName } = req.body;
+    
+    const { firstName, lastName, email, password } = req.body;
+    console.log(firstName, lastName, email, password);
+    console.log(req.body);
 
     try {
-        const user = await User.create({ email, password, firstName, lastName});
+        const user = await User.create({ firstName, lastName, email, password });
         const token = createToken(user._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000});
         res.status(201).json({user: user._id });
     }
     catch(err) {
+        console.log(User.firstName);
         const errors = handleErrors(err);
         res.status(400).json({errors});
     }

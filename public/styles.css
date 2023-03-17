@@ -149,17 +149,13 @@ textarea{
 }
 .create-blog button{
   margin-top: 20px;
-  background: crimson;
-  color: white;
-  padding: 6px;
   border: 0;
-  font-size: 1.2em;
   cursor: pointer;
 }
 /* Form Styles */
 form h2{
   font-size: 2.4em;
-  font-weight: 900;
+  /* font-weight: 900;*/
   margin-bottom: 40px;
 }
 form{
