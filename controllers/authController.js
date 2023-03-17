@@ -52,8 +52,6 @@ module.exports.loginGet = (req, res) => {
 module.exports.signupPost = async (req, res) => {
     
     const { firstName, lastName, email, password } = req.body;
-    console.log(firstName, lastName, email, password);
-    console.log(req.body);
 
     try {
         const user = await User.create({ firstName, lastName, email, password });
@@ -62,7 +60,6 @@ module.exports.signupPost = async (req, res) => {
         res.status(201).json({user: user._id });
     }
     catch(err) {
-        console.log(User.firstName);
         const errors = handleErrors(err);
         res.status(400).json({errors});
     }
