@@ -4,10 +4,17 @@
         <p>Quaide's JS Web App</p>
     </div>
     <ul>
-        <li><a href="/">Blogs</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/login">Log In</a></li>
-        <li><a href="/signup">Sign Up</a></li>
-        <li><a href="/blogs/create">New Blog</a></li>
+        <% if (user) { %>
+            <li>Welcome, <%= user.firstName  %></li>
+            <li><a href="/blogs/create">New Blog</a></li>
+            <li><a href="/">Blogs</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+        <% } else { %>
+            <li><a href="/">Blogs</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Log In</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+        <% } %>
     </ul>
 </nav>
