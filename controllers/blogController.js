@@ -1,6 +1,8 @@
 const Blog = require('../models/blog');
 const dayjs = require('dayjs');
 var localizedFormat = require('dayjs/plugin/localizedFormat');
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 dayjs.extend(localizedFormat);
 
 //blogIndex, blogDetails, blogCreate, blogCreateGet, blogCreatePost, blogDelete
@@ -34,14 +36,21 @@ const blogCreateGet = (req, res) => {
 
 const blogCreatePost = (req, res) => {
     const blog = new Blog(req.body);
+    const token = req.cookies.jwt;
+    jwt.verify(token, 'quaide test secret', async (err, decodedToken) => {
+        let user = await User.findById(decodedToken.id);
+        blog.author = user.firstName;
 
-    blog.save()
+        blog.save()
         .then((result) => {
             res.redirect('/blogs');
         })
         .catch((err) => {
             console.log(err);
         })
+    })
+
+
 }
 
 const blogDelete = (req, res) => {

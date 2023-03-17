@@ -3,9 +3,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
 const authRoutes = require('./routes/authRoutes');
-const cookierParser = require('cookie-parser');
-const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
+const { checkUser } = require('./middleware/authMiddleware');
 require('dotenv').config();
 
 //express app
