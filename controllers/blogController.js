@@ -38,18 +38,23 @@ const blogCreatePost = (req, res) => {
     const blog = new Blog(req.body);
     const token = req.cookies.jwt;
     jwt.verify(token, 'quaide test secret', async (err, decodedToken) => {
-        let user = await User.findById(decodedToken.id);
-        blog.author = user.firstName;
-
-        blog.save()
-        .then((result) => {
-            res.redirect('/blogs');
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        if(err) {
+            res.redirect('/login');
+        }
+        else {
+            let user = await User.findById(decodedToken.id);
+            blog.author = user.firstName;
+    
+            blog.save()
+            .then((result) => {
+                res.redirect('/blogs');
+            })
+            .catch((err) => {
+                res.redirect('/login');
+                console.log(err);
+            })
+        }
     })
-
 
 }
 
