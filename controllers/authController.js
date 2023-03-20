@@ -83,3 +83,18 @@ module.exports.logoutGet = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
     res.redirect('/');
 };
+
+module.exports.emailUpdate = async (req, res) => {
+    try {
+    const updateUser = req.body;
+
+    User.forEach(user => {
+      if (user.id === parseInt(req.params.id)) {
+        user.email = updateUser.email ? updateUser.email : user.email;
+        res.json({ msg: "User updated", user });
+      }
+    });
+  } catch (err) {
+    res.sendStatus(400);
+  };
+}

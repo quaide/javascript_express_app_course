@@ -195,3 +195,16 @@ button{
   font-size: 0.8em;
   font-weight: bold;
 }
+/* Account Management */
+.alter-password{
+  font-size: 1.2em;
+  margin-top: 50px;
+}
+.alter-email {
+  margin-top: 50px;
+  font-size: 1.2em;
+}
+.alter-email-form, .alter-password-form {
+  background-color: #f6f8fa;
+  margin-top: 25px;
+}
