@@ -43,7 +43,8 @@ const blogCreatePost = (req, res) => {
         }
         else {
             let user = await User.findById(decodedToken.id);
-            blog.author = user.firstName;
+            blog.author = `${user.firstName} ${user.lastName}`;
+            blog.author_email = user.email;
     
             blog.save()
             .then((result) => {
@@ -54,7 +55,7 @@ const blogCreatePost = (req, res) => {
                 console.log(err);
             })
         }
-    })
+    });
 
 }
 

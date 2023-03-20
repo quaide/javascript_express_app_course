@@ -48,6 +48,15 @@ module.exports.loginGet = (req, res) => {
     res.render('login', {title: 'Log in'})
 };
 
+module.exports.accountGet = (req, res) => {
+    res.render('account', {title: 'Account Management'})
+}
+
+module.exports.logoutGet = (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('/');
+};
+
 module.exports.signupPost = async (req, res) => {
     
     const { firstName, lastName, email, password } = req.body;
@@ -79,22 +88,24 @@ module.exports.loginPost = async (req, res) => {
     }
 };
 
-module.exports.logoutGet = (req, res) => {
-    res.cookie('jwt', '', { maxAge: 1 });
-    res.redirect('/');
-};
-
-module.exports.emailUpdate = async (req, res) => {
-    try {
-    const updateUser = req.body;
-
-    User.forEach(user => {
-      if (user.id === parseInt(req.params.id)) {
-        user.email = updateUser.email ? updateUser.email : user.email;
-        res.json({ msg: "User updated", user });
-      }
+module.exports.accountPut = async (req, res) => {
+    jwt.verify(token, 'quaide test secret', async (err, decodedToken) => {
+        if(err) {
+            res.redirect('/login');
+        }
+        else {
+            try {
+                const updateUser = req.body;
+        
+                User.forEach(user => {
+                if (user.id === parseInt(req.params.id)) {
+                    user.email = updateUser.email ? updateUser.email : user.email;
+                    res.json({ msg: "User updated", user });
+                }
+            });
+          } catch (err) {
+            res.sendStatus(400);
+          };
+        }
     });
-  } catch (err) {
-    res.sendStatus(400);
-  };
 }

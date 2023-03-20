@@ -37,9 +37,9 @@ app.get('/about', (req, res) => {
     res.render('about', { title: 'About'});
 });
 
-app.get('/account', (req, res) => {
-    res.render('account', {title: 'Account Management'});
-})
+// app.get('/account', (req, res) => {
+//     res.render('account', {title: 'Account Management'});
+// })
 
 app.use('/blogs', blogRoutes);
 app.use(authRoutes);
