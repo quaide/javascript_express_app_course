@@ -34,10 +34,9 @@ const handleErrors = (err) => {
     return errors;
 }
 
-const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
     return jwt.sign({ id }, 'quaide test secret', {
-        expiresIn: maxAge
+        expiresIn: '1h'
     });
 }
 
@@ -56,7 +55,7 @@ module.exports.signupPost = async (req, res) => {
     try {
         const user = await User.create({ firstName, lastName, email, password });
         const token = createToken(user._id);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000});
+        res.cookie('jwt', token, { httpOnly: true, expiresIn: '1h'});
         res.status(201).json({user: user._id });
     }
     catch(err) {
@@ -71,7 +70,7 @@ module.exports.loginPost = async (req, res) => {
     try {
         const user = await User.login(email, password);
         const token = createToken(user._id);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000});
+        res.cookie('jwt', token, { httpOnly: true, expiresIn: '1h'});
         res.status(200).json({ user: user._id });
     }
     catch (err) {
