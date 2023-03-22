@@ -6,12 +6,12 @@
 
   <div class="account content">
     <div>
-      <h2>Account Management</h2>
+      <h2 class="management-header">Account Management for <%= user.email %></h2>
     </div>
     <div class="alter-email content">
         <p>Change Email</p>
         <hr>
-        <form class="alter-email-form" action="/account" method="PUT">
+        <form class="alter-email-form" action="/account/:id" method="POST">
           <label for="old-email">Old Email</label>
           <input type="text" id="old-email" name="old-email" required>
           <label for="new-email">New Email</label>
@@ -22,7 +22,7 @@
     <div class="alter-password content">
       <p>Change Password</p>
       <hr>
-      <form class="alter-password-form" action="/account" method="PUT">
+      <form class="alter-password-form" action="/account" method="POST">
         <label for="old-password">Old Password</label>
         <input type="password" id="old-password" name="old-password" required>
         <label for="new-password">New Password</label>
@@ -52,6 +52,6 @@
 //         });
 //       }
 //     }
-//   </script>
+  </script>
 </body>
 </html>

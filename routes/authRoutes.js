@@ -14,9 +14,9 @@ router.post('/login', authController.loginPost);
 
 router.get('/logout', authController.logoutGet);
 
-router.get('/account', requireAuth, authController.accountGet);
+router.get('/account/:id', requireAuth, authController.accountGet);
 
-router.put('/account/:id', requireAuth, authController.accountPut);
+router.post('/account/:id', requireAuth, authController.accountPost);
 
 
 module.exports = router;

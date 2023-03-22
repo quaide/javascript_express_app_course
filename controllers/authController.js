@@ -40,24 +40,31 @@ const createToken = (id) => {
     });
 }
 
-module.exports.signupGet = (req, res) => {
+const signupGet = (req, res) => {
     res.render('signup', {title: 'Sign Up'})
 };
 
-module.exports.loginGet = (req, res) => {
+const loginGet = (req, res) => {
     res.render('login', {title: 'Log in'})
 };
 
-module.exports.accountGet = (req, res) => {
-    res.render('account', {title: 'Account Management'})
-}
+const accountGet = (req, res) => {
+    const id = req.params.id;
+    User.findById(id)
+    .then(result => {
+        res.render('account', {account: result, title: 'Account Management'});
+    })
+    .catch(err => {
+        res.status(404).render('404', {title: 'Account not found'});
+    });
+};
 
-module.exports.logoutGet = (req, res) => {
+const logoutGet = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
     res.redirect('/');
 };
 
-module.exports.signupPost = async (req, res) => {
+const signupPost = async (req, res) => {
     
     const { firstName, lastName, email, password } = req.body;
 
@@ -73,7 +80,7 @@ module.exports.signupPost = async (req, res) => {
     }
 };
 
-module.exports.loginPost = async (req, res) => {
+const loginPost = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -88,24 +95,51 @@ module.exports.loginPost = async (req, res) => {
     }
 };
 
-module.exports.accountPut = async (req, res) => {
+const accountPost = async (req, res) => {
+    console.log('why are we not getting here');
+    // const id = req.params.id;
+    // User.findById(id)
+    // .then(result => {
+    //     res.render('account', {account: result, title: 'Account Management'});
+    // })
+    // .catch(err => {
+    //     res.status(404).render('404', {title: 'Account not found'});
+    // });
+    
+    const user = new User(req.body);
+    console.log(user.oldEmail);
+    const oldEmail = user.email;
+    const token = req.cookies.jwt;
     jwt.verify(token, 'quaide test secret', async (err, decodedToken) => {
         if(err) {
             res.redirect('/login');
         }
         else {
-            try {
-                const updateUser = req.body;
-        
-                User.forEach(user => {
-                if (user.id === parseInt(req.params.id)) {
-                    user.email = updateUser.email ? updateUser.email : user.email;
-                    res.json({ msg: "User updated", user });
-                }
-            });
-          } catch (err) {
-            res.sendStatus(400);
-          };
+            let user = await User.findById(decodedToken.id);
+            User.findByIdAndUpdate
+            
         }
     });
+    // One try
+    // const id = req.params.id;
+    // const newEmail = req.params.email;
+
+    // another attempt
+    // User.findByIdAndUpdate(id)
+    //     .then(result => {
+    //         res.json({ redirect: '/account'});
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+}
+
+module.exports = {
+    signupGet,
+    loginGet,
+    accountGet,
+    logoutGet,
+    signupPost,
+    loginPost,
+    accountPost
 }
