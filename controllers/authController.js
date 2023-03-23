@@ -110,8 +110,13 @@ const accountPost = async (req, res) => {
     const {newEmail, oldEmail} = req.body;
     console.log(newEmail, oldEmail);
     let user = await User.findById(id);
-    user.email = newEmail;
-    user.save();
+    user.updateOne({
+        '_id': id,
+        'email': newEmail
+    })
+    .then(result => {
+        res.redirect('/');
+    })
     // User.findById(id) 
     // .then(result => {
     //     console.log(result);
