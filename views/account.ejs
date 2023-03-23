@@ -11,11 +11,11 @@
     <div class="alter-email content">
         <p>Change Email</p>
         <hr>
-        <form class="alter-email-form" action="/account/:id" method="POST">
-          <label for="old-email">Old Email</label>
-          <input type="text" id="old-email" name="old-email" required>
-          <label for="new-email">New Email</label>
-          <input type="text" id="new-email" name="new-email" required>
+        <form class="alter-email-form" action="/account/<%= user._id %>" method="POST">
+          <label for="oldEmail">Old Email</label>
+          <input type="text" id="oldEmail" name="oldEmail" required>
+          <label for="newEmail">New Email</label>
+          <input type="text" id="newEmail" name="newEmail" required>
           <button>Update Email</button>
         </form>
       </div>
@@ -23,10 +23,10 @@
       <p>Change Password</p>
       <hr>
       <form class="alter-password-form" action="/account" method="POST">
-        <label for="old-password">Old Password</label>
-        <input type="password" id="old-password" name="old-password" required>
-        <label for="new-password">New Password</label>
-        <input type="password" id="new-password" name="new-password" required>
+        <label for="oldPassword">Old Password</label>
+        <input type="password" id="oldPassword" name="oldPassword" required>
+        <label for="newPassword">New Password</label>
+        <input type="password" id="newPassword" name="newPassword" required>
         <label for="confirm-password">Confirm New Password</label>
         <input type="password" id="confirm-password" name="confirm-password" required>
         <button>Update Password</button>
@@ -38,20 +38,48 @@
   <%- include("./partials/footer.ejs") %>
 
   <script>
-//    if(user){
-//       if(user.email === blog.author_email) {
-//         const trashcan = document.querySelector('a.delete');
-//         trashcan.addEventListener('click', (e) => {
-//           const endpoint = `/blogs/${trashcan.dataset.doc}`;
-//           fetch(endpoint, {
-//             method: 'DELETE',
-//           })
-//           .then(response => response.json())
-//           .then(data => window.location.href = data.redirect)
-//           .catch(err => console.log(err));
-//         });
-//       }
-//     }
+    // const form = document.querySelector('form');
+    // const emailError = document.querySelector('.email.error');
+    // const passwordError = document.querySelector('.password.error');
+    // const firstNameError = document.querySelector('.firstName.error');
+    // const lastNameError = document.querySelector('.lastName.error');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        //reset errors
+        // emailError.textContent = '';
+        // passwordError.textContent = '';
+        // firstNameError.textContent = '';
+        // lastNameError.textContent = '';
+
+        //get values
+        const oldEmail = form.oldEmail.value;
+        const newEmail = form.newEmail.value;
+
+        try {
+            const res = await fetch('/account', {
+                method: 'POST',
+                body: JSON.stringify({ oldEmail, newEmail }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await res.json();
+            console.log(data);
+            // if(data.errors) {
+            //     firstNameError.textContent = data.errors.firstName;
+            //     lastNameError.textContent = data.errors.lastName;
+            //     emailError.textContent = data.errors.email;
+            //     passwordError.textContent = data.errors.password;
+            // }
+            if(data.user) {
+                location.assign('/blogs');
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+        
+    });
   </script>
 </body>
 </html>

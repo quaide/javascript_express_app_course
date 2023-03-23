@@ -106,20 +106,28 @@ const accountPost = async (req, res) => {
     //     res.status(404).render('404', {title: 'Account not found'});
     // });
     
-    const user = new User(req.body);
-    console.log(user.oldEmail);
-    const oldEmail = user.email;
-    const token = req.cookies.jwt;
-    jwt.verify(token, 'quaide test secret', async (err, decodedToken) => {
-        if(err) {
-            res.redirect('/login');
-        }
-        else {
-            let user = await User.findById(decodedToken.id);
-            User.findByIdAndUpdate
+    const id = req.params.id;
+    const {newEmail, oldEmail} = req.body;
+    console.log(newEmail, oldEmail);
+    let user = await User.findById(id);
+    user.email = newEmail;
+    user.save();
+    // User.findById(id) 
+    // .then(result => {
+    //     console.log(result);
+    // })
+    // console.log(user.oldEmail);
+    // const oldEmail = user.email;
+    // const token = req.cookies.jwt;
+    // jwt.verify(token, 'quaide test secret', async (err, decodedToken) => {
+    //     if(err) {
+    //         res.redirect('/login');
+    //     }
+    //     else {
+    //         User.findByIdAndUpdate(decodedToken);
             
-        }
-    });
+    //     }
+    // });
     // One try
     // const id = req.params.id;
     // const newEmail = req.params.email;
