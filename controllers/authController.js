@@ -107,8 +107,8 @@ const accountPost = async (req, res) => {
     // });
     
     const id = req.params.id;
-    const {newEmail, oldEmail} = req.body;
-    console.log(newEmail, oldEmail);
+    const {newEmail} = req.body;
+    console.log(newEmail);
     let user = await User.findById(id);
     user.updateOne({
         '_id': id,
