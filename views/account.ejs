@@ -37,8 +37,7 @@
     let accountForm = document.querySelector("div.alter-email content form[name='updateEmail']");
     const emailError = document.querySelector('.newEmail.error');
 
-    if(accountForm) {
-      accountForm.addEventListener('submit', async (e) => {
+      accountForm.addEventListener('submit',  (e) => {
           e.preventDefault();
           //reset errors
           emailError.textContent = '';
@@ -50,12 +49,12 @@
           console.log(confirmEmail)
           if(newEmail === confirmEmail) {          
             try {
-                let res = await fetch('/account', {
+                let res =  fetch('/account', {
                     method: 'POST',
                     body: JSON.stringify({ newEmail }),
                     headers: { 'Content-Type': 'application/json' }
                 });
-                let data = await res.json();
+                let data =  res.json();
                 console.log(data);
 
             }
@@ -68,7 +67,7 @@
         }
           
     });
-  }
+
   </script>
 
 <%- include("./partials/footer.ejs") %>

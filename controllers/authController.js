@@ -96,14 +96,6 @@ const loginPost = async (req, res) => {
 };
 
 const accountPost = async (req, res) => {
-    // const id = req.params.id;
-    // User.findById(id)
-    // .then(result => {
-    //     res.render('account', {account: result, title: 'Account Management'});
-    // })
-    // .catch(err => {
-    //     res.status(404).render('404', {title: 'Account not found'});
-    // });
     
     const id = req.params.id;
     const {newEmail} = req.body;
@@ -115,34 +107,6 @@ const accountPost = async (req, res) => {
     .then(result => {
         res.redirect('/');
     })
-    // User.findById(id) 
-    // .then(result => {
-    //     console.log(result);
-    // })
-    // console.log(user.oldEmail);
-    // const oldEmail = user.email;
-    // const token = req.cookies.jwt;
-    // jwt.verify(token, 'quaide test secret', async (err, decodedToken) => {
-    //     if(err) {
-    //         res.redirect('/login');
-    //     }
-    //     else {
-    //         User.findByIdAndUpdate(decodedToken);
-            
-    //     }
-    // });
-    // One try
-    // const id = req.params.id;
-    // const newEmail = req.params.email;
-
-    // another attempt
-    // User.findByIdAndUpdate(id)
-    //     .then(result => {
-    //         res.json({ redirect: '/account'});
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
 }
 
 module.exports = {
