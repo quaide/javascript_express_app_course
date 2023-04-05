@@ -96,7 +96,6 @@ const loginPost = async (req, res) => {
 };
 
 const accountPost = async (req, res) => {
-    console.log('why are we not getting here');
     // const id = req.params.id;
     // User.findById(id)
     // .then(result => {
@@ -108,7 +107,6 @@ const accountPost = async (req, res) => {
     
     const id = req.params.id;
     const {newEmail} = req.body;
-    console.log(newEmail);
     let user = await User.findById(id);
     user.updateOne({
         '_id': id,

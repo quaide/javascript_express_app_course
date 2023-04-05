@@ -1,7 +1,4 @@
-<html lang="en">
-<%- include("./partials/head.ejs") %>
-
-<body>
+  <%- include("./partials/head.ejs") %>
   <%- include("./partials/nav.ejs") %>
 
   <div class="account content">
@@ -11,7 +8,7 @@
     <div class="alter-email content">
         <p>Change Email</p>
         <hr>
-        <form class="alter-email-form" action="/account/<%= user._id %>" method="POST">
+        <form name="updateEmail" action="/account/<%= user._id %>" method="POST">
           <label for="newEmail">New Email</label>
           <input type="text" id="newEmail" name="newEmail" required>
           <label for="confirmEmail">Confirm Email</label>
@@ -36,44 +33,42 @@
 
   </div>
 
-  <%- include("./partials/footer.ejs") %>
-
   <script>
-    //THIS IS THE PROBLEM
-    let accountForm = document.querySelector('form');
+    let accountForm = document.querySelector("div.alter-email content form[name='updateEmail']");
     const emailError = document.querySelector('.newEmail.error');
 
-    accountForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        //reset errors
-        emailError.textContent = '';
+    if(accountForm) {
+      accountForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          //reset errors
+          emailError.textContent = '';
 
+          //get values
+          const newEmail = accountForm.newEmail.value;
+          const confirmEmail = accountForm.confirmEmail.value;
+          console.log(newEmail)
+          console.log(confirmEmail)
+          if(newEmail === confirmEmail) {          
+            try {
+                let res = await fetch('/account', {
+                    method: 'POST',
+                    body: JSON.stringify({ newEmail }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                let data = await res.json();
+                console.log(data);
 
-        //get values
-        let newEmail = accountForm.newEmail.value;
-        let confirmEmail = accountForm.confirmEmail.value;
-        
-
-        try {
-            let res = await fetch('/account', {
-                method: 'POST',
-                body: JSON.stringify({ newEmail }),
-                headers: { 'Content-Type': 'application/json' }
-            });
-            let data = await res.json();
-            console.log(data);
-            // if(data.errors) {
-            //     firstNameError.textContent = data.errors.firstName;
-            //     lastNameError.textContent = data.errors.lastName;
-            //     emailError.textContent = data.errors.email;
-            //     passwordError.textContent = data.errors.password;
-            // }
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
-        catch (err) {
-            console.log(err);
+        else {
+          emailError.textContent = 'Email must Match';
         }
-        
+          
     });
+  }
   </script>
-</body>
-</html>
+
+<%- include("./partials/footer.ejs") %>
